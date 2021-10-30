@@ -228,7 +228,7 @@ private:
     ValueCart valueCart;
     bool openCart;
 public:
-    void Flip() { !openCart; };
+    void Flip() { openCart = !openCart; };
     ValueCart GetValue()const { return valueCart; }
 };
 
