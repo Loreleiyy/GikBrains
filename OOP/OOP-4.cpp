@@ -318,6 +318,7 @@ void printArr(std::vector<int> arr, int SZ) {
 int main()
 {
 	// 1
+	srand(time(0));
 	Array a(20);
 	for (int i = 0; i < a.getLength(); ++i) {
 
@@ -329,7 +330,7 @@ int main()
 	cout << a.pop_back() << ' ' << a.getLength() << ' ' << a.pop_front() << ' ' << a.getLength() << endl;
 	// 2
 
-	srand(time(0));
+	
 	
 	std::vector<int> arr;
 	arr.resize(30);
