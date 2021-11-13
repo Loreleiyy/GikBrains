@@ -70,10 +70,7 @@ private:
 public:
     virtual bool IsHitting() const = 0;
     bool Boosted() {
-        if (GetValue() > 21)
-            return true;
-        else
-            return false;
+        return (GetValue() > 21);
     }
     void Bust() {
         if (Boosted())
