@@ -70,10 +70,7 @@ private:
 public:
     virtual bool IsHitting() const = 0;
     bool Boosted() {
-        if (GetValue() > 21)
-            return true;
-        else
-            return false;
+        return (GetValue() > 21)
     }
     void Bust() {
         if (Boosted())
@@ -102,6 +99,6 @@ int main()
     StringValuePair<int> svp("Amazing", 7);
     std::cout << "Pair: " << svp.first() << ' ' << svp.second() << '\n';
 
-
+  
     return 0;
 }
