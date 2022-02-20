@@ -161,4 +161,6 @@ int main()
     cout << countFind(s, sim) << '\n' << endl;
     time.print();
     
+    file.close();
+    return 0;
 }
