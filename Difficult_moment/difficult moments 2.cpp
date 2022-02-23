@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <ctime>
 
 
 
@@ -30,6 +31,11 @@ void  SortPointers(std::vector<T>& vpoin) {
         }
     }
 }
+
+template <typename T> 
+void SortPointers2 (std::vector<T*>& pointers) { 
+    sort(begin(pointers), end(pointers), 
+        [](T* lhs, T* rhs) { return *lhs < *rhs; }); }
 
 template<typename T>
 void printVector(const std::vector<T>& v) {
@@ -102,6 +108,7 @@ int forFind(string& sfile, string& sim) {
 int main()
 {
     setlocale(LC_ALL, "ru");
+    srand(time(NULL));
 
     // 1
     int a, b;
@@ -127,7 +134,7 @@ int main()
     }
     
     printVector(vptr);
-    SortPointers(vptr);
+    SortPointers2(vptr);
     cout << "\nsort points \n";
     printVector(vptr);
     
