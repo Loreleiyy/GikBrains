@@ -19,6 +19,20 @@ void printVector(const std::vector<T>& vec) {
 int main()
 {
     srand(time(NULL));
+
+    // 1 задание
+    std::vector<int> d(20);
+    std::generate(d.begin(), d.end(), []() {return rand() % 100; });
+    sort(d.begin(), d.end());
+    printVector(d);
+
+    int numer = rand() % 100;
+    std::cout << numer << std::endl;
+    insert_sorted(d, numer);
+    printVector(d);
+
+    std::cout << std::endl;
+
     // 2 задание
     std::vector<double> a(100);
     
@@ -50,17 +64,6 @@ int main()
     std::cout << mistake << std::endl;
     std::cout << mistake2 << std::endl;
 
-    // 1 задание
-    std::vector<int> d(20);
-    std::generate(d.begin(), d.end(), []() {return rand() % 100; });
-    sort(d.begin(), d.end());
-    printVector(d);
-
-    int numer = rand() % 100;
-    std::cout << numer << std::endl;
-    insert_sorted(d, numer);
-    printVector(d);
     
-    std::cout << std::endl;
     return 0; 
 }
