@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package protobuf;
+
+message FullName{
+    string name = 1;
+    string lastName = 2;
+    optional string  patronymic = 3;
+}
+
+
+message Student{
+    FullName fullname =1;
+    repeated int32 evaluations =2;
+    double averageScore = 3;
+}
+
+
+message StudentsGroup{
+    repeated Student students = 1;
+}
