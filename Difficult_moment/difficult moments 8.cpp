@@ -180,11 +180,12 @@ public:
         else {
             cout << "Error!" << endl;
         }
-
+        in.close();
     }
     void Save() override {
         std::ofstream ou("group.bin", std::ios_base::binary);
         group.SerializePartialToOstream(&ou);
+        ou.close();
     }
 };
 
