@@ -6,20 +6,24 @@
 
 #include <string>
 #include <iostream>
-#include <fstream>
+
 #include <chrono>
 
 
 #include "MyTools.h"
+#include "FileLoggerSingletone.h"
+
 
 using namespace std;
 
+class FileLoggerSingletone;
+
 namespace MyTools {
 
-    ofstream logOut;
+    
 
     //=============================================================================================
-
+    
     void ClrScr()
     {
         system("cls");
@@ -68,15 +72,17 @@ namespace MyTools {
         SetConsoleTextAttribute(hConsole, color); // color =  (WORD)((BackgroundColor << 4) | TextColor))
     }
 
+} // namespace MyTools
     //=============================================================================================
 
-    void __fastcall OpenLogFile(const string& FN)
+    void __fastcall FileLoggerSingletone::OpenLogFile(const string& FN)
     {
-        logOut.open(FN, ios_base::out);
+        this->logOut.open(FN, ios_base::out);
     }
 
-    void CloseLogFile()
+    void FileLoggerSingletone::CloseLogFile()
     {
+        
         if (logOut.is_open())
         {
             logOut.close();
@@ -93,7 +99,7 @@ namespace MyTools {
         return string(buf);
     }
 
-    void __fastcall WriteToLog(const string& str)
+    void __fastcall FileLoggerSingletone::WriteToLog(const string& str)
     {
         if (logOut.is_open())
         {
@@ -101,7 +107,7 @@ namespace MyTools {
         }
     }
 
-    void __fastcall WriteToLog(const string& str, int n)
+    void __fastcall FileLoggerSingletone::WriteToLog(const string& str, int n)
     {
         if (logOut.is_open())
         {
@@ -109,7 +115,7 @@ namespace MyTools {
         }
     }
 
-    void __fastcall WriteToLog(const string& str, double d)
+    void __fastcall FileLoggerSingletone::WriteToLog(const string& str, double d)
     {
         if (logOut.is_open())
         {
@@ -120,4 +126,3 @@ namespace MyTools {
     //=============================================================================================
 
 
-} // namespace MyTools

@@ -7,6 +7,8 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "ProxyLogger.h"
+
 
 class SBomber
 {
@@ -24,9 +26,9 @@ public:
     void DrawFrame();
     void MoveObjects();
     void CheckObjects();
-
+    
 private:
-
+    InterfaceFileLogger* proxy = new ProxyLogger(&FileLoggerSingletone::getInstance());
     void CheckPlaneAndLevelGUI();
     void CheckBombsAndGround();
     void __fastcall CheckDestoyableObjects(Bomb* pBomb);

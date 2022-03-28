@@ -3,6 +3,8 @@
 
 #include "SBomber.h"
 #include "MyTools.h"
+#include "FileLoggerSingletone.h"
+//#include "ProxyLogger.h"
 
 using namespace std;
 
@@ -10,7 +12,8 @@ using namespace std;
 
 int main(void)
 {
-    MyTools::OpenLogFile("log.txt");
+    InterfaceFileLogger* proxy(&(FileLoggerSingletone::getInstance()));
+    proxy->OpenLogFile("log.txt");
 
     SBomber game;
 
@@ -32,7 +35,7 @@ int main(void)
 
     } while (!game.GetExitFlag());
 
-    MyTools::CloseLogFile();
+    proxy->CloseLogFile();
 
     return 0;
 }
