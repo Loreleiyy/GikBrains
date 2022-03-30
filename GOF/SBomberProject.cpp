@@ -12,11 +12,11 @@ using namespace std;
 
 int main(void)
 {
-    InterfaceFileLogger* proxy(&(FileLoggerSingletone::getInstance()));
-    proxy->OpenLogFile("log.txt");
+    InterfaceFileLogger* logger(&(FileLoggerSingletone::getInstance()));
+    logger->OpenLogFile("log.txt");
 
     SBomber game;
-
+    
     do {
         game.TimeStart();
 
@@ -35,7 +35,7 @@ int main(void)
 
     } while (!game.GetExitFlag());
 
-    proxy->CloseLogFile();
+    logger->CloseLogFile();
 
     return 0;
 }
