@@ -68,10 +68,7 @@ public:
             for (; index < arr.size(); ++index) {
                 
                 
-                //if (typeid( Bomb* ) == typeid(arr[index])) {        // такой способ не работает
-                   
-                Bomb* pBomb = dynamic_cast<Bomb*>(arr[index]);
-                if (pBomb != nullptr) {
+                if (typeid( Bomb ) == typeid(*(arr[index]))) {
                     ptr = arr[index];
                     break;
                 }
@@ -93,8 +90,7 @@ public:
             --index;
            
             for (; index >= 0; --index) {
-                Bomb* pBomb = dynamic_cast<Bomb*>(arr[index]);
-                if (pBomb != nullptr) {
+                if (typeid(Bomb) == typeid(*(arr[index]))) {
                     ptr = arr[index];
                     break;
                 }
