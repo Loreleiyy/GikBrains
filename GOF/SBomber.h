@@ -110,6 +110,9 @@ public:
         DynamicObject*& operator*() {
             return arr.at(index);
         }
+        DynamicObject* operator->() {
+            return ptr;
+        }
         bool operator==(BombIterator it) {
             if (ptr == it.ptr && arr == it.arr) {
                 return true;
