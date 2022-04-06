@@ -8,6 +8,7 @@
 #include "Ground.h"
 #include "Tank.h"
 #include "ProxyLogger.h"
+#include "CollisionDetector.h"
 
 
 class SBomber
@@ -28,10 +29,13 @@ public:
     void CheckObjects();
     
 private:
+    
     InterfaceFileLogger* proxy = new ProxyLogger(&FileLoggerSingletone::getInstance());
-    void CheckPlaneAndLevelGUI();
+
+ /*   void CheckPlaneAndLevelGUI();
     void CheckBombsAndGround();
-    void __fastcall CheckDestoyableObjects(Bomb* pBomb);
+    void __fastcall CheckDestoyableObjects(Bomb* pBomb);*/
+
 
     void __fastcall DeleteDynamicObj(DynamicObject * pBomb);
     void __fastcall DeleteStaticObj(GameObject* pObj);
@@ -52,7 +56,7 @@ private:
     uint64_t startTime, finishTime, passedTime;
     uint16_t bombsNumber, deltaTime, fps;
     int16_t score;
-
+    CollisionDetector* collision;
 public:
     class BombIterator {
     private:

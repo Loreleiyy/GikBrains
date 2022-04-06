@@ -11,6 +11,8 @@
 #include "FileLoggerSingletone.h"
 #include "ProxyLogger.h"
 #include "AdapterTank.h"
+#include "HouseBuilder.h"
+#include "CollisionDetector.h"
 
 using namespace std;
 using namespace MyTools;
@@ -62,11 +64,25 @@ SBomber::SBomber()
     pTank->SetPos(50, groundY - 1);
     vecStaticObj.push_back(pTank);
 
-    House * pHouse = new House;
+   
+    HouseDirector dir;
+    int hbuild;
+    cout << "what kind of house to create? \n" <<
+
+        "1 only the walls \n" <<
+        "2 no chimney \n" <<
+        "3 no window \n" <<
+        "4 full house \n";
+    std::cin >> hbuild;
+    House* pHouse = dir.createHouse(hbuild);
+    if (pHouse == nullptr) {
+        pHouse = new House;
+    }
     pHouse->SetWidth(13);
     pHouse->SetPos(80, groundY - 1);
     vecStaticObj.push_back(pHouse);
 
+    collision = new WinCollisionDetector(exitFlag, score, vecDynamicObj, vecStaticObj);
     /*
     Bomb* pBomb = new Bomb;
     pBomb->SetDirection(0.3, 1);
@@ -99,6 +115,7 @@ SBomber::~SBomber()
     if (proxy != nullptr) {
         delete proxy;
     }
+    delete collision;
 }
 
 void SBomber::MoveObjects()
@@ -117,11 +134,12 @@ void SBomber::MoveObjects()
 void SBomber::CheckObjects()
 {
     proxy->WriteToLog(string(__FUNCTION__) + " was invoked");
-
-    CheckPlaneAndLevelGUI();
-    CheckBombsAndGround();
+    
+    
+    collision->CheckPlaneAndLevelGUI();
+    collision->CheckBombsAndGround();
 };
-
+/*
 void SBomber::CheckPlaneAndLevelGUI()
 {
     if (FindPlane()->GetX() > FindLevelGUI()->GetFinishX())
@@ -163,7 +181,7 @@ void SBomber::CheckDestoyableObjects(Bomb * pBomb)
         }
     }
 }
-
+*/
 void SBomber::DeleteDynamicObj(DynamicObject* pObj)
 {
     auto it = vecDynamicObj.begin();
