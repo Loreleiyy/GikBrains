@@ -10,6 +10,7 @@
 #include "House.h"
 #include "FileLoggerSingletone.h"
 #include "ProxyLogger.h"
+#include "AdapterTank.h"
 
 using namespace std;
 using namespace MyTools;
@@ -51,12 +52,12 @@ SBomber::SBomber()
     pGr->SetWidth(width - 2);
     vecStaticObj.push_back(pGr);
 
-    Tank* pTank = new Tank;
+    AdapterTank* pTank = new AdapterTank;
     pTank->SetWidth(13);
     pTank->SetPos(30, groundY - 1);
     vecStaticObj.push_back(pTank);
 
-    pTank = new Tank;
+    pTank = new AdapterTank;
     pTank->SetWidth(13);
     pTank->SetPos(50, groundY - 1);
     vecStaticObj.push_back(pTank);
@@ -196,11 +197,11 @@ void SBomber::DeleteStaticObj(GameObject* pObj)
 vector<DestroyableGroundObject*> SBomber::FindDestoyableGroundObjects() const
 {
     vector<DestroyableGroundObject*> vec;
-    Tank* pTank;
+    AdapterTank* pTank;
     House* pHouse;
     for (size_t i = 0; i < vecStaticObj.size(); i++)
     {
-        pTank = dynamic_cast<Tank*>(vecStaticObj[i]);
+        pTank = dynamic_cast<AdapterTank*>(vecStaticObj[i]);
         if (pTank != nullptr)
         {
             vec.push_back(pTank);
@@ -238,15 +239,18 @@ vector<Bomb*> SBomber::FindAllBombs() const
 {
     vector<Bomb*> vecBombs;
 
-    for (size_t i = 0; i < vecDynamicObj.size(); i++)
+    /*for (size_t i = 0; i < vecDynamicObj.size(); i++)
     {
         Bomb* pBomb = dynamic_cast<Bomb*>(vecDynamicObj[i]);
         if (pBomb != nullptr)
         {
             vecBombs.push_back(pBomb);
         }
+    }*/
+    
+    for (auto it = SBomber::begin(); it != SBomber::end(); ++it) {
+        vecBombs.push_back(dynamic_cast<Bomb*>(*it));
     }
-
     return vecBombs;
 }
 
