@@ -53,7 +53,7 @@ public:
 
 class HouseBuilderWall : public HouseBuilder {
 private:
-	void constructRoof(){}
+	void constructRoof() {}
 	void constructThimn(){}
 	void constructWindow(){}
 };
@@ -65,7 +65,7 @@ private:
 
 class HouseBuilderNOWindow : public HouseBuilder {
 private:
-	void constructThimn() {}
+	void constructWindow() {}
 };
 
 class HouseDirector {
