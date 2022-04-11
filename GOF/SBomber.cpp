@@ -63,6 +63,8 @@ SBomber::SBomber()
     pHouse->SetPos(80, groundY - 1);
     vecStaticObj.push_back(pHouse);
 
+
+    visit = new LogVisitor;
     /*
     Bomb* pBomb = new Bomb;
     pBomb->SetDirection(0.3, 1);
@@ -90,6 +92,7 @@ SBomber::~SBomber()
             delete vecStaticObj[i];
         }
     }
+    delete visit;
 }
 
 void SBomber::MoveObjects()
@@ -101,6 +104,7 @@ void SBomber::MoveObjects()
         if (vecDynamicObj[i] != nullptr)
         {
             vecDynamicObj[i]->Move(deltaTime);
+            vecDynamicObj[i]->Accept(*visit);
         }
     }
 };
@@ -131,14 +135,14 @@ void SBomber::CheckBombsAndGround()
         if (vecBombs[i]->GetY() >= y) // Пересечение бомбы с землей
         {
             pGround->AddCrater(vecBombs[i]->GetX());
-            CheckDestoyableObjects(vecBombs[i]);
+            vecBombs[i]->CheckDestoyableObjects(*this);
             DeleteDynamicObj(vecBombs[i]);
         }
     }
 
 }
 
-void SBomber::CheckDestoyableObjects(Bomb * pBomb)
+/*void SBomber::CheckDestoyableObjects(Bomb * pBomb)
 {
     vector<DestroyableGroundObject*> vecDestoyableObjects = FindDestoyableGroundObjects();
     const double size = pBomb->GetWidth();
@@ -152,9 +156,10 @@ void SBomber::CheckDestoyableObjects(Bomb * pBomb)
             score += vecDestoyableObjects[i]->GetScore();
             DeleteStaticObj(vecDestoyableObjects[i]);
         }
-    }
+    
+    
 }
-
+*/
 void SBomber::DeleteDynamicObj(DynamicObject* pObj)
 {
     auto it = vecDynamicObj.begin();
