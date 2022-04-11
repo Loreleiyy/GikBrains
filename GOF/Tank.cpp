@@ -3,6 +3,7 @@
 
 #include "Tank.h"
 #include "MyTools.h"
+#include "Mediator.h"
 
 using namespace std;
 using namespace MyTools;
@@ -41,4 +42,19 @@ void Tank::Draw() const
 	cout << "    #####";
 	GotoXY(x,y);
 	cout << " ###########";
+	int ind;
+	ind = rand() % 5;
+	if (ind < messages.size()) {
+		mediator.setMessage(messages[ind]);
+	}
+	mediator.setPrint();
+}
+
+Tank::Tank(Mediator& m) : mediator(m) {
+	messages.push_back("now you tear up!!!");
+	messages.push_back("we will fight as heroes))");
+	messages.push_back("I didn't understand how I got here");
+	messages.push_back("you're tired of running, let's fight normally...");
+	messages.push_back("Go quickly, I don't want to wait");
+	
 }
