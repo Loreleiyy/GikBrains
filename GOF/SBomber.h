@@ -7,6 +7,9 @@
 #include "Bomb.h"
 #include "Ground.h"
 #include "Tank.h"
+#include "Mediator.h"
+
+class Mediator;
 
 class SBomber
 {
@@ -50,4 +53,5 @@ private:
     uint64_t startTime, finishTime, passedTime;
     uint16_t bombsNumber, deltaTime, fps;
     int16_t score;
+    Mediator* mediator;
 };

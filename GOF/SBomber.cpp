@@ -1,6 +1,7 @@
 
 #include <conio.h>
 #include <windows.h>
+#include <ctime>
 
 #include "MyTools.h"
 #include "SBomber.h"
@@ -23,8 +24,14 @@ SBomber::SBomber()
     score(0)
 {
     WriteToLog(string(__FUNCTION__) + " was invoked");
-
-    Plane* p = new Plane;
+    srand(time(NULL));
+    Plane* p;
+    if (rand() % 2) {
+        p = new BigPlane;
+    }
+    else {
+        p = new ColorPlane;
+    }
     p->SetDirection(1, 0.1);
     p->SetSpeed(4);
     p->SetPos(5, 10);
@@ -48,12 +55,14 @@ SBomber::SBomber()
     pGr->SetWidth(width - 2);
     vecStaticObj.push_back(pGr);
 
-    Tank* pTank = new Tank;
+    mediator = new Mediator(*pGUI);
+
+    Tank* pTank = new Tank(*mediator);
     pTank->SetWidth(13);
     pTank->SetPos(30, groundY - 1);
     vecStaticObj.push_back(pTank);
 
-    pTank = new Tank;
+    pTank = new Tank(*mediator);
     pTank->SetWidth(13);
     pTank->SetPos(50, groundY - 1);
     vecStaticObj.push_back(pTank);
@@ -63,6 +72,7 @@ SBomber::SBomber()
     pHouse->SetPos(80, groundY - 1);
     vecStaticObj.push_back(pHouse);
 
+    
     /*
     Bomb* pBomb = new Bomb;
     pBomb->SetDirection(0.3, 1);
@@ -90,6 +100,7 @@ SBomber::~SBomber()
             delete vecStaticObj[i];
         }
     }
+    delete mediator;
 }
 
 void SBomber::MoveObjects()
@@ -162,7 +173,9 @@ void SBomber::DeleteDynamicObj(DynamicObject* pObj)
     {
         if (*it == pObj)
         {
+            auto temp = *it;
             vecDynamicObj.erase(it);
+            delete temp;
             break;
         }
     }
@@ -175,7 +188,9 @@ void SBomber::DeleteStaticObj(GameObject* pObj)
     {
         if (*it == pObj)
         {
+            auto temp = *it;
             vecStaticObj.erase(it);
+            delete temp;
             break;
         }
     }
