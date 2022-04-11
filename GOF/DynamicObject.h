@@ -1,8 +1,11 @@
 #pragma once
 
-#include <stdint.h>
 
+#include <stdint.h>
+#include <tuple>
 #include "GameObject.h"
+
+class Visitor;
 
 class DynamicObject : public GameObject 
 {
@@ -15,9 +18,14 @@ public:
     
     virtual void Move(uint16_t time) { x += xDirction * speed * time * 0.001; y += yDirection * speed * time * 0.001; };
 
+    inline double  GetSpeed() { return speed; }
+    inline double GetDirectionX() { return  xDirction; }
+    inline double GetDirectionY() { return  yDirection; }
+    virtual void __fastcall Accept(Visitor& v) {}
 protected:
 
     double speed;
     double xDirction, yDirection;
 
 };
+
