@@ -8,9 +8,12 @@ using namespace std;
 
 //========================================================================================================================
 
+extern FileLogger logger("log.txt");
+
+
 int main(void)
 {
-    MyTools::OpenLogFile("log.txt");
+    
 
     SBomber game;
 
@@ -32,7 +35,7 @@ int main(void)
 
     } while (!game.GetExitFlag());
 
-    MyTools::CloseLogFile();
+    
 
     return 0;
 }
