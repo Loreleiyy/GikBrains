@@ -14,7 +14,7 @@ public:
 
     inline void SetWidth(uint16_t widthN) { width = widthN; }
     inline uint16_t GetWidth() const { return width; }
-    virtual ~GameObject(){}
+
 protected:
 
     double x, y;

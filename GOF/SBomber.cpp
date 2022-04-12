@@ -173,9 +173,7 @@ void SBomber::DeleteDynamicObj(DynamicObject* pObj)
     {
         if (*it == pObj)
         {
-            auto temp = *it;
             vecDynamicObj.erase(it);
-            delete temp;
             break;
         }
     }
@@ -188,9 +186,7 @@ void SBomber::DeleteStaticObj(GameObject* pObj)
     {
         if (*it == pObj)
         {
-            auto temp = *it;
             vecStaticObj.erase(it);
-            delete temp;
             break;
         }
     }
