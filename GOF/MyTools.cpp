@@ -6,7 +6,7 @@
 
 #include <string>
 #include <iostream>
-#include <fstream>
+
 #include <chrono>
 
 
@@ -16,7 +16,7 @@ using namespace std;
 
 namespace MyTools {
 
-    ofstream logOut;
+
 
     //=============================================================================================
 
@@ -68,20 +68,27 @@ namespace MyTools {
         SetConsoleTextAttribute(hConsole, color); // color =  (WORD)((BackgroundColor << 4) | TextColor))
     }
 
+
+    
+}
+
     //=============================================================================================
 
-    void __fastcall OpenLogFile(const string& FN)
+
+
+    __fastcall FileLogger::FileLogger(const string& FN)
     {
         logOut.open(FN, ios_base::out);
     }
 
-    void CloseLogFile()
+    FileLogger::~FileLogger()
     {
         if (logOut.is_open())
         {
             logOut.close();
         }
     }
+
 
     string GetCurDateTime()
     {
@@ -93,7 +100,7 @@ namespace MyTools {
         return string(buf);
     }
 
-    void __fastcall WriteToLog(const string& str)
+    void __fastcall FileLogger::WriteToLog(const string& str)
     {
         if (logOut.is_open())
         {
@@ -101,7 +108,7 @@ namespace MyTools {
         }
     }
 
-    void __fastcall WriteToLog(const string& str, int n)
+    void __fastcall FileLogger::WriteToLog(const string& str, int n)
     {
         if (logOut.is_open())
         {
@@ -109,7 +116,7 @@ namespace MyTools {
         }
     }
 
-    void __fastcall WriteToLog(const string& str, double d)
+    void __fastcall FileLogger::WriteToLog(const string& str, double d)
     {
         if (logOut.is_open())
         {
@@ -120,4 +127,3 @@ namespace MyTools {
     //=============================================================================================
 
 
-} // namespace MyTools

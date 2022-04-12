@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <stdint.h>
 #include <string>
 
@@ -37,12 +38,18 @@ namespace MyTools {
 	uint16_t GetMaxY();
 
     void SetColor(ConsoleColor color);
-
+};
 	//=============================================================================================
 
-	void __fastcall OpenLogFile(const std::string& FN);
+    class FileLogger{
+    private:
+        std::ofstream logOut;
+    public:
 
-	void CloseLogFile();
+	__fastcall FileLogger(const std::string& FN);
+
+
+	~FileLogger();
 
 	void __fastcall WriteToLog(const std::string& str);
 
@@ -50,6 +57,7 @@ namespace MyTools {
 
 	void __fastcall WriteToLog(const std::string& str, double d);
 
+
+    };
 	//=============================================================================================
 
-};
