@@ -46,3 +46,7 @@ void House::Draw() const
 	GotoXY(x, y);
 	cout << "############";
 }
+
+House* House::clone(){
+	return new House(*this);
+}

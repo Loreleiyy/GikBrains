@@ -4,10 +4,11 @@ class GameObject {
 public:
 
     GameObject() : x(0.0), y(0.0), width(0) { }
-
+    virtual ~GameObject(){}
     virtual void Draw() const = 0;
 
     inline void SetPos(double nx, double ny) { x = nx; y = ny; }
+    inline void setX(double nX) { x = nX; }
 
     inline double GetY() const { return y; }
     inline double GetX() const { return x; }

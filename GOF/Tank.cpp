@@ -42,3 +42,7 @@ void Tank::Draw() const
 	GotoXY(x,y);
 	cout << " ###########";
 }
+
+Tank* Tank::clone(){
+	return new Tank(*this);
+}
