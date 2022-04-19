@@ -1,6 +1,7 @@
 
 #include <conio.h>
 #include <windows.h>
+#include <ctime>
 
 #include "MyTools.h"
 #include "SBomber.h"
@@ -8,6 +9,7 @@
 #include "Ground.h"
 #include "Tank.h"
 #include "House.h"
+#include "Tree.h"
 
 using namespace std;
 using namespace MyTools;
@@ -63,6 +65,13 @@ SBomber::SBomber()
     pHouse->SetPos(80, groundY - 1);
     vecStaticObj.push_back(pHouse);
 
+    Tree* tree = new Tree;
+    tree->setTree(new SmallTree);
+    tree->SetWidth(2);
+    tree->SetPos(45, groundY - 1);
+    vecDynamicObj.push_back(tree);
+
+    srand(time(NULL));
     /*
     Bomb* pBomb = new Bomb;
     pBomb->SetDirection(0.3, 1);
@@ -299,6 +308,9 @@ void SBomber::ProcessKBHit()
         DropBomb();
         break;
 
+    case 'd':
+        cloneObj();
+        break;
     default:
         break;
     }
@@ -341,7 +353,6 @@ void SBomber::TimeFinish()
     finishTime = GetTickCount64();
     deltaTime = uint16_t(finishTime - startTime);
     passedTime += deltaTime;
-
     WriteToLog(string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
 }
 
@@ -364,5 +375,30 @@ void SBomber::DropBomb()
         vecDynamicObj.push_back(pBomb);
         bombsNumber--;
         score -= Bomb::BombCost;
+    }
+}
+
+void SBomber::cloneObj() {
+    vector<DestroyableGroundObject*> vecObjects = FindDestoyableGroundObjects();
+    int index;
+    index = rand() % vecObjects.size();
+    
+    uint16_t Width = vecObjects[index]->GetWidth();
+    for (double i = 5; i < 100; i +=Width) {
+        bool empty = true;
+        for(auto n : vecObjects){
+            if ((n->isInside(i, i + Width))) {
+                empty = false;
+                break;
+            }
+            
+        }
+        if (empty) {
+            DestroyableGroundObject* newObj = vecObjects[index]->clone();
+            newObj->setX(i);
+            vecStaticObj.push_back(newObj);
+            
+            return;
+        }
     }
 }
