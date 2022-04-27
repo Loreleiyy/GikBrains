@@ -5,7 +5,7 @@
 #include <string>
 
 #pragma comment (lib, "ws2_32.lib")
-
+// сервер
 
 #include <socket_wrapper/socket_headers.h>
 #include <socket_wrapper/socket_wrapper.h>
@@ -62,7 +62,6 @@ int main(int argc, char const *argv[])
     sockaddr_in client_address = {0};
     socklen_t client_address_len = sizeof(sockaddr_in);
     ssize_t recv_len = 0;
-    client_address.sin_family = PF_INET;
     std::cout << "Running echo server...\n" << std::endl;
     char client_address_buf[INET_ADDRSTRLEN];
 
@@ -108,9 +107,6 @@ int main(int argc, char const *argv[])
 
             if ("exit" == command_string) run = false;
             
-
-           
-
             // Send same content back to the client ("echo").
             sendto(sock, buffer, recv_len, 0, reinterpret_cast<const sockaddr *>(&client_address),
                    client_address_len);

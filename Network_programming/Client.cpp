@@ -52,7 +52,6 @@ int main(int argc, char const* argv[])
     ssize_t recv_len = 0;
 
     std::cout << "Running client...\n" << std::endl;
-    char client_address_buf[INET_ADDRSTRLEN];
 
     std::string message;
     char buffer[256];
