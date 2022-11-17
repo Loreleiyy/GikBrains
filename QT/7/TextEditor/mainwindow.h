@@ -6,6 +6,7 @@
 #include <QMenu>
 #include <QMap>
 #include <QMdiArea>
+#include <QTextBlockFormat>
 
 
 
@@ -21,11 +22,7 @@ public:
     MainWindow(QMainWindow *parent = nullptr);
     ~MainWindow();
 
-    enum actions{
-        save,
-        open,
-        reference
-    };
+
 protected:
 
 
@@ -45,6 +42,12 @@ private slots:
     void setEnglish();
     void setRu();
     void print();
+    void copyFormat();
+    void pasteFormat();
+    void newFont();
+    void onLeftEdge();
+    void onRightEdge();
+    void onCenter();
 
 private:
     Ui::MainWindow *ui;
@@ -55,6 +58,8 @@ private:
     QMenu *menu;
     QMenu *actLanguage;
     QMenu *actTheme;
+    QMenu *format;
     QMap<QString, QAction*> action;
+    QTextBlockFormat *form;
 };
 #endif // MAINWINDOW_H
