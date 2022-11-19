@@ -10,6 +10,7 @@
 #include <QStyle>
 #include <QGridLayout>
 #include <QFontDialog>
+#include <QDateTime>
 
 MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent)
@@ -77,6 +78,8 @@ MainWindow::MainWindow(QMainWindow *parent)
     connect(action.value("on Right Edge"), &QAction::triggered, this, &MainWindow::onRightEdge);
     action["on Center"] = format->addAction("on Center");
     connect(action.value("on Center"), &QAction::triggered, this, &MainWindow::onCenter);
+    action["Time Date"] = format->addAction("Time Date");
+    connect(action.value("Time Date"), &QAction::triggered, this, &MainWindow::dateTime);
 
 
         // Task 6.2 print
@@ -233,6 +236,12 @@ void MainWindow::onCenter()
     ui->textEdit->setAlignment(Qt::AlignHCenter);
 }
 
+void MainWindow::dateTime()
+{
+    QDateTime dtime = QDateTime::currentDateTime();
+    ui->textEdit->textCursor().insertText(dtime.toString("hh:mm dd.MM.yyyy"));
+}
+
 void MainWindow::buttonSetText()
 {
 
@@ -253,4 +262,6 @@ void MainWindow::buttonSetText()
     action.value("on Left Edge")->setText(tr("on Left Edge"));
     action.value("on Right Edge")->setText(tr("on Right Edge"));
     action.value("on Center")->setText(tr("on Center"));
+    action.value("Time Date")->setText(tr("Time Date"));
+
 }
