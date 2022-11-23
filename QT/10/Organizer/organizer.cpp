@@ -58,12 +58,22 @@ Organizer::~Organizer()
 
 void Organizer::setTask(QString newName, QString date, QString prog)
 {
+
     QDate dat = QDate::fromString(date, "dd.MM.yyyy");
     qDebug() << dat;
 
     int iprog = prog.toInt();
+    if(newName.isEmpty() || (!dat.isValid()) || !(iprog >= 0 && iprog <= 10)){
+        emit noValid();
+        return;
+    }
     newListTask.push_back(Task(newName, dat, iprog));
     qDebug() << newListTask[newListTask.size()-1].name;
+}
+
+int Organizer::getTaskCount()
+{
+    return listTask.size() + newListTask.size();
 }
 
 

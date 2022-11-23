@@ -25,8 +25,9 @@ public:
     explicit Organizer(QObject *parent = nullptr);
     ~Organizer();
     Q_INVOKABLE void setTask(QString newName, QString date, QString prog);
+    Q_INVOKABLE int getTaskCount();
 signals:
-
+    void noValid();
 };
 
 #endif // ORGANIZER_H
