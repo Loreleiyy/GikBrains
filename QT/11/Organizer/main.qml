@@ -138,4 +138,12 @@ Window {
                 onClicked: _warning.visible = false
             }
         }
+        NewButton{
+            x: 100
+            y: 300
+            width: 130
+            height: 30
+            text: "All tasks"
+            onClicked: _organizer.getTable()
+        }
 }

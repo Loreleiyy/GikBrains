@@ -2,58 +2,67 @@
 #include <QFile>
 #include <QByteArray>
 #include <QDebug>
+#include <QWindow>
+#include <QSqlRecord>
+
+
+bool Organizer::createConnectionDB()
+{
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("save.db");
+    return db.open();
+}
+
+bool Organizer::createTable()
+{
+    QSqlQuery que;
+    QString str = "CREATE TABLE save ("
+            "id	INTEGER NOT NULL,"
+            "name	TEXT,"
+            "day	INTEGER,"
+            "mounth	INTEGER,"
+            "year INTEGER,"
+            "progress	INTEGER,"
+                  "PRIMARY KEY(id)"
+                  ")";
+    qDebug() << str;
+    return que.exec(str);
+}
+
+bool Organizer::insertRecord(QString newName, int day, int mounth, int year, int prog)
+{
+    QSqlQuery que;
+    QString str = "INSERT INTO save(name, day, mounth, year, progress) "
+            "VALUES('%1', '%2', '%3', '%4', '%5')";
+    QString s = str.arg(newName).arg(day).arg(mounth).arg(year).arg(prog);
+    return que.exec(s);
+}
 
 Organizer::Organizer(QObject *parent)
     : QObject{parent}
 {
-    fileName = "save";
-    QFile file(fileName);
-    if (file.open(QFile::ReadOnly)){
 
-        QString str;
+    view = new QTableView();
 
-        while(!file.atEnd()){
-                str = file.readLine();
 
-                QStringList strTask = str.split(' ');
-                QString name = strTask[0];
-                int dd, MM, yyyy;
-                dd = strTask[1].toInt();
-                MM = strTask[2].toInt();
-                yyyy = strTask[3].toInt();
-                QDate date(yyyy, MM, dd);
 
-                int progress = strTask[4].toInt();
-                listTask.push_back(Task(name, date, progress));
+    model = new QSqlQueryModel(this);
 
-        }
+
+    if (!createConnectionDB()){
+        qDebug() << "no connection DB";
+        return;
     }
-    for(const Task &task : listTask){
-        qDebug() << task.name << ' ' << task.deadline << ' ' << task.progress;
-    }
-    qDebug() << listTask.size();
+//    if(!createTable()){
+//        qDebug() << "no create table";
+//        return;
+//    }
+
 }
 
 Organizer::~Organizer()
 {
-    QFile file(fileName);
-    if (file.open(QFile::Append)){
-        QString str = "";
-        for(const Task &task : newListTask){
-            int dd, MM, yyyy;
-            dd = task.deadline.day();
-            MM = task.deadline.month();
-            yyyy = task.deadline.year();
-            str += task.name + ' ';
-            str += QString::number(dd) + ' ' +
-                    QString::number(MM) + ' ' +
-                    QString::number(yyyy) + ' ';
-            str += QString::number(task.progress) + '\n';
-        }
-        QByteArray byte = str.toUtf8();
-        file.write(byte);
 
-    }
 }
 
 void Organizer::setTask(QString newName, QString date, QString prog)
@@ -61,19 +70,38 @@ void Organizer::setTask(QString newName, QString date, QString prog)
 
     QDate dat = QDate::fromString(date, "dd.MM.yyyy");
     qDebug() << dat;
+    int dd, MM, yyyy;
+    dd = dat.day();
+    MM = dat.month();
+    yyyy = dat.year();
 
     int iprog = prog.toInt();
     if(newName.isEmpty() || (!dat.isValid()) || !(iprog >= 0 && iprog <= 10)){
         emit noValid();
         return;
     }
-    newListTask.push_back(Task(newName, dat, iprog));
-    qDebug() << newListTask[newListTask.size()-1].name;
+
+    if(!insertRecord(newName, dd, MM, yyyy, iprog)){
+        qDebug() << "no record";
+    }
+//    newListTask.push_back(Task(newName, dat, iprog));
 }
 
 int Organizer::getTaskCount()
 {
-    return listTask.size() + newListTask.size();
+    QString str = "SELECT COUNT(*) FROM save";
+    QSqlQuery que;
+    que.exec(str);
+    que.first();
+    return que.value(0).toInt();
+}
+
+void Organizer::getTable()
+{
+    model->setQuery("SELECT * FROM save");
+    view->setModel(model);
+    view->resize(800,600);
+    view->show();
 }
 
 
