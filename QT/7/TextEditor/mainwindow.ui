@@ -14,13 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>90</y>
-      <width>621</width>
-      <height>421</height>
+      <x>70</x>
+      <y>100</y>
+      <width>641</width>
+      <height>371</height>
      </rect>
     </property>
    </widget>
