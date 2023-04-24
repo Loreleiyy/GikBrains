@@ -10,6 +10,7 @@
 
 
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -48,6 +49,7 @@ private slots:
     void onLeftEdge();
     void onRightEdge();
     void onCenter();
+    void dateTime();
 
 private:
     Ui::MainWindow *ui;
